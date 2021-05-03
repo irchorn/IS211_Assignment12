@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<table>
+    <h1>Students</h1>
+    <tr>
+        <th>ID</th><th>First Name</th><th>Last Name</th>
+    </tr>
+    {% for s in students %}
+    <tr>
+        <td>{{st.st_id}}</td><td>{{st.f_name}}</td><td>{{st.l_name}}</td><a href="'/student/{{st.st_id}}"></a>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
