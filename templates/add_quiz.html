@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Add Quiz</title>
 </head>
 <body>
-
+<h1> Add Quiz</h1>
+<form action="/quiz/add" method="post">
+    <input type="text" name="subject" >Subject</input>
+    <input type="text" name="number_of_questions" >Number of Questions</input>
+    <input type="text" name="date" >Date</input>
+    <input type="submit" value="Add Quiz"/>
+</form>
 </body>
 </html>
