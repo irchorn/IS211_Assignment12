@@ -14,8 +14,8 @@ def insert_data():
             "CREATE TABLE IF NOT EXISTS Quizzes(quiz_id INT, subject TEXT, number_of_questions INT, date TEXT )")
         cur.execute("INSERT INTO Quizzes VALUES(1,'Python Basics', 5, 'Feb 5 2015')")
 
-        cur.execute("CREATE TABLE IF NOT EXISTS Score(student_id INT, quiz_id INT, score INT)")
-        cur.execute("INSERT INTO Score VALUES(1,1,85)")
+        cur.execute("CREATE TABLE IF NOT EXISTS Score(score_id, student_id INT, quiz_id INT, score INT)")
+        cur.execute("INSERT INTO Score VALUES(1, 1, 1, 85)")
 
 
 def students_data():
