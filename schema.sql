@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS Score(score_id INTEGER PRIMARY KEY, student_id INTEGE
 
 INSERT INTO Students VALUES(1,'John','Smith');
 INSERT INTO Quizzes VALUES(1,'Python Basics', 5, 'Feb 5 2015');
-INSERT INTO Score VALUES(1,1,85);
+INSERT INTO Score VALUES(1,1,1,85);
 
 SELECT first_name, last_name, subject, date, score FROM Score sc
 INNER JOIN Students st ON st.student_id = sc.student_id
