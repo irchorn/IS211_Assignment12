@@ -1,6 +1,5 @@
 import sqlite3 as lite
 
-
 def insert_data():
     con = lite.connect('hw12.db')
 
@@ -42,6 +41,18 @@ def quiz_data():
             print("{} {} {}".format(row["quiz_id"], row["subject"], row["number_of_questions"], row["date"] ))
 
 
+def view_results():
+    con = lite.connect('hw12.db')
+    with con:
+        con.row_factory = lite.Row
+
+        cur = con.cursor()
+        cur.execute("")
+        rows = cur.fetchall()
+        for row in rows:
+            print("{} {} {}".format(row["student_id"],row["last_name"], row["first_name"] ))
+  
+            
 if __name__ == "__main__":
     insert_data()
     students_data()
