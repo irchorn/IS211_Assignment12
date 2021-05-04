@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS Students;
 DROP TABLE IF EXISTS Quizzes;
 DROP TABLE IF EXISTS Score;
 
-CREATE TABLE IF NOT EXISTS Students(student_id INTEGER PRIMARY KEY, first_name TEXT, last_name TEXT);
+CREATE TABLE IF NOT EXISTS Students(student_id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT, last_name TEXT);
 CREATE TABLE IF NOT EXISTS Quizzes(quiz_id INTEGER PRIMARY KEY, subject TEXT, number_of_questions INTEGER, date TEXT );
 CREATE TABLE IF NOT EXISTS Score(score_id INTEGER PRIMARY KEY, student_id INTEGER, quiz_id INTEGER, score INTEGER)
 
