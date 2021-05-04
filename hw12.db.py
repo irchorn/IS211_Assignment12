@@ -47,13 +47,17 @@ def view_results():
         con.row_factory = lite.Row
 
         cur = con.cursor()
-        cur.execute("")
+        cur.execute("SELECT first_name, last_name, subject, date, score FROM Score sc
+        INNER JOIN Students st ON st.student_id = sc.student_id
+        INNER JOIN Quizzes q ON q.quiz_id = sc.quiz_id
+        WHERE student_id = 1")
         rows = cur.fetchall()
         for row in rows:
-            print("{} {} {}".format(row["student_id"],row["last_name"], row["first_name"] ))
+            print("{} {} {}".format(row["student_id"],row["quiz_id"], row["date"], row["score"] ))
   
             
 if __name__ == "__main__":
     insert_data()
     students_data()
     quiz_data()
+    view_results()                
