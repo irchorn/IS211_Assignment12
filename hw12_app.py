@@ -132,7 +132,7 @@ def view_results(id):
     cur = g.db.execute("SELECT Quizzes.q_id, Score.score, Quizzes.date, Quizzes.subject FROM Students JOIN Score ON Score.q_id = Quizzes.q_id WHERE Students.s_id=?",[id])
     res = cur.fetchall()
     student_results = dict[q_id=r[0],subject=r[1], date=r[2], score=r[3] ]
-    return render template("score.html", student_results=student_results) 
+    return render_template("score.html", student_results=student_results) 
 
 if __name__ == "__main__":
     app.run()
