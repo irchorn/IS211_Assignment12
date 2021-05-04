@@ -7,14 +7,14 @@ def insert_data():
     with con:
         cur = con.cursor()
 
-        cur.execute("CREATE TABLE IF NOT EXISTS Students(student_id INT, first_name TEXT, last_name TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS Students(student_id INT PRIMARY KEY AUTOINCREMENT, first_name TEXT, last_name TEXT)")
         cur.execute("INSERT INTO Students VALUES(1,'John','Smith')")
 
         cur.execute(
-            "CREATE TABLE IF NOT EXISTS Quizzes(quiz_id INT, subject TEXT, number_of_questions INT, date TEXT )")
+            "CREATE TABLE IF NOT EXISTS Quizzes(quiz_id INT PRIMARY KEY, subject TEXT, number_of_questions INT, date TEXT )")
         cur.execute("INSERT INTO Quizzes VALUES(1,'Python Basics', 5, 'Feb 5 2015')")
 
-        cur.execute("CREATE TABLE IF NOT EXISTS Score(score_id, student_id INT, quiz_id INT, score INT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS Score(score_id PRIMARY KEY, student_id INT, quiz_id INT, score INT)")
         cur.execute("INSERT INTO Score VALUES(1, 1, 1, 85)")
 
 
