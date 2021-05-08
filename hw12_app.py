@@ -53,7 +53,7 @@ def login():
     if request.method == 'POST':
         session['username']= request.form['username']
         username = request.form['username']
-        password = rquest.form['password']
+        password = request.form['password']
         
         if username == 'admin' and password == 'password':
             return redirect('/dashboard')
