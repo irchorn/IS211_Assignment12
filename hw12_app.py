@@ -44,7 +44,7 @@ def before_request():
 
 @app.route('/')
 def index():
-    return rederect('/login')
+    return redirect('/login')
 
 
 @app.route('/login', method =['GET', 'POST'])
