@@ -85,11 +85,11 @@ def add_student():
     
         if request.metod == 'POST':
             student_name = request.form['last_name']
-            g.db=get.db()
+            g.db=get_db()
       
             g.db.execute("INSERT INTO Students(last_name) values(?,)",(student_name))
             g.db.commit()
-            flash(error)
+            flash('error')
         return render_template("add_student.html") 
       else:
         return redirect(url_for('/dashboard'))
@@ -101,11 +101,11 @@ def add_quiz():
     
         if request.metod == 'POST':
             quiz = request.form['subject']
-            g.db=get.db()
+            g.db=get_db()
       
             g.db.execute("INSERT INTO Quizzes(subject) values(?,)",(subject))
             g.db.commit()
-            flash(error) 
+            flash('error') 
         return render_template("add_quiz.html")
      else:
         return redirect(url_for('/dashboard'))
@@ -116,11 +116,11 @@ def add_score():
     
         if request.metod == 'POST':
             score = request.form['score']
-            g.db=get.db()
+            g.db=get_db()
       
             g.db.execute("INSERT INTO Score(score) values(?,)",(score))
             g.db.commit()
-            flash(error)
+            flash('error')
         return render_template("add_score.html")
      else:
         return redirect(url_for('dashboard'))
