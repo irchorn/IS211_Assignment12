@@ -89,7 +89,7 @@ def add_student():
       
             g.db.execute("INSERT INTO Students(last_name) values(?,)",(student_name))
             g.db.commit()
-            flash('error')
+            
         return render_template("add_student.html") 
       else:
         return redirect(url_for('/dashboard'))
@@ -105,7 +105,7 @@ def add_quiz():
       
             g.db.execute("INSERT INTO Quizzes(subject) values(?,)",(subject))
             g.db.commit()
-            flash('error') 
+            
         return render_template("add_quiz.html")
      else:
         return redirect(url_for('/dashboard'))
@@ -120,7 +120,7 @@ def add_score():
       
             g.db.execute("INSERT INTO Score(score) values(?,)",(score))
             g.db.commit()
-            flash('error')
+            
         return render_template("add_score.html")
      else:
         return redirect(url_for('dashboard'))
