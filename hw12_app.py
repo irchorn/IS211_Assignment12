@@ -62,7 +62,7 @@ def login():
    
 
 
-@app.route('/dashboard/', method =['GET', 'POST'])
+@app.route('/dashboard', method =['GET', 'POST'])
 def dashboard():
     if session['username']=='admin':
         cur = g.db.execute("SELECT * FROM Students")
@@ -108,7 +108,7 @@ def add_quiz():
             
         return render_template("add_quiz.html")
      else:
-        return redirect(url_for('/dashboard'))
+        return redirect(url_for('dashboard'))
     
 @app.route('/add_score', method == ['GET','POST'])
 def add_score():
