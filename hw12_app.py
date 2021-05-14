@@ -47,7 +47,7 @@ def index():
     return redirect('/login')
 
 
-@app.route('/login', method =['GET', 'POST'])
+@app.route('/login', method=['GET', 'POST'])
 def login():
     
     if request.method == 'POST':
@@ -62,7 +62,7 @@ def login():
    
 
 
-@app.route('/dashboard', method =['GET', 'POST'])
+@app.route('/dashboard', method=['GET', 'POST'])
 def dashboard():
     if session['username']=='admin':
         cur = g.db.execute("SELECT * FROM Students")
@@ -79,7 +79,7 @@ def dashboard():
         return redirect(url_for('/login'))
 
 
-@app.route('/add_student', method =['GET', 'POST'])
+@app.route('/add_student', method=['GET', 'POST'])
 def add_student():
     if session ['user_name'] == 'admin':
     
@@ -95,7 +95,7 @@ def add_student():
         return redirect(url_for('/dashboard'))
     
 
-@app.route('/add_quiz', method =['GET','POST'])
+@app.route('/add_quiz', method=['GET','POST'])
 def add_quiz():
     if session ['user_name'] == 'admin':
     
@@ -103,14 +103,14 @@ def add_quiz():
             quiz = request.form['subject']
             g.db=get_db()
       
-            g.db.execute("INSERT INTO Quizzes(subject) values(?,)",(subject))
+            g.db.execute("INSERT INTO Quizzes(subject) values(?,)",(quiz))
             g.db.commit()
             
         return render_template("add_quiz.html")
      else:
         return redirect(url_for('dashboard'))
     
-@app.route('/add_score', method == ['GET','POST'])
+@app.route('/add_score', method=['GET','POST'] )
 def add_score():
     if session ['user_name'] == 'admin':
     
