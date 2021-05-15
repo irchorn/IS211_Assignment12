@@ -14,21 +14,23 @@ def init_db():
         db.commit()
 
 
-app.config['SECRET_KEY']='dev'
-
+app.config['SECRET_KEY'] = 'dev'
 DATABASE = 'hw12.db'
+app.config['DATABASE'] = DATABASE
+
 
 def connect_db():
-   
     rv = sqlite3.connect(app.config['DATABASE'])
     rv.row_factory = sqlite3.Row
     return rv
+
 
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
         db = g._database = sqlite3.connect(DATABASE)
     return db
+
 
 @app.teardown_appcontext
 def close_connection(exception):
@@ -44,95 +46,101 @@ def before_request():
 
 @app.route('/')
 def index():
-    return redirect('/login')
+    return redirect(url_for('login'))
 
 
-@app.route('/login', method =['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    
     if request.method == 'POST':
-        session['username']= request.form['username']
+        session['username'] = request.form['username']
         username = request.form['username']
         password = request.form['password']
-        
+
         if username == 'admin' and password == 'password':
             return redirect('/dashboard')
-        else:
-            return render_template('login.html')
-   
+
+    return render_template('login.html')
 
 
-@app.route('/dashboard/', method =['GET', 'POST'])
+@app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
-    if session['username']=='admin':
+    if session['username'] == 'admin':
         cur = g.db.execute("SELECT * FROM Students")
         cur2 = g.db.execute("SELECT * FROM Quizzes")
-        
+
         res = cur.fetchall()
         res2 = cur2.fetchall()
-        
-        students = [dict(student_id = r[0], first_name = r[1], last_name =r[2]) for r in res]
-        quizzes = [dict(quiz_id = r[0], subject = r[1], number_of_questions=r[2], date=r[3]) for r in res2]
-        
+
+        students = [dict(student_id=r[0], first_name=r[1], last_name=r[2]) for r in res]
+        quizzes = [dict(quiz_id=r[0], subject=r[1], number_of_questions=r[2], date=r[3]) for r in res2]
+
         return render_template("dashboard.html", students=students, quizzes=quizzes)
     else:
         return redirect(url_for('/login'))
 
 
-@app.route('/add_student', method =['GET', 'POST'])
+@app.route('/add_student', methods=['GET', 'POST'])
 def add_student():
-    if session ['user_name'] == 'admin':
-    
-        if request.metod == 'POST':
+    if session['username'] == 'admin':
+
+        if request.method == 'POST':
             student_name = request.form['last_name']
-            g.db=get_db()
-      
-            g.db.execute("INSERT INTO Students(last_name) values(?,)",(student_name))
-            g.db.commit()
-            
-        return render_template("add_student.html") 
-      else:
-        return redirect(url_for('/dashboard'))
-    
+            g.db = get_db()
 
-@app.route('/add_quiz', method =['GET','POST'])
+            g.db.execute("INSERT INTO Students(last_name) values(?)", (student_name,))
+            g.db.commit()
+            return redirect(url_for('dashboard'))
+        else:
+            return render_template("add_student.html")
+    else:
+        return redirect(url_for('/login'))
+
+
+@app.route('/add_quiz', methods=['GET', 'POST'])
 def add_quiz():
-    if session ['user_name'] == 'admin':
-    
-        if request.metod == 'POST':
+    if session['username'] == 'admin':
+
+        if request.method == 'POST':
             quiz = request.form['subject']
-            g.db=get_db()
-      
-            g.db.execute("INSERT INTO Quizzes(subject) values(?,)",(subject))
+            g.db = get_db()
+
+            g.db.execute("INSERT INTO Quizzes(subject) values(?)", (quiz,))
             g.db.commit()
-            
-        return render_template("add_quiz.html")
-     else:
-        return redirect(url_for('/dashboard'))
-    
-@app.route('/add_score', method == ['GET','POST'])
+            return redirect(url_for('dashboard'))
+        else:
+            return render_template("add_quiz.html")
+    else:
+        return redirect(url_for('/login'))
+
+
+@app.route('/add_score', methods=['GET', 'POST'])
 def add_score():
-    if session ['user_name'] == 'admin':
-    
-        if request.metod == 'POST':
+    if session['username'] == 'admin':
+
+        if request.method == 'POST':
             score = request.form['score']
-            g.db=get_db()
-      
-            g.db.execute("INSERT INTO Score(score) values(?,)",(score))
+            g.db = get_db()
+
+            g.db.execute("INSERT INTO Score(score) values(?,)", (score))
             g.db.commit()
-            
+
         return render_template("add_score.html")
-     else:
+    else:
         return redirect(url_for('dashboard'))
-    
 
 
-@app.rout('/student/<id>')
+@app.route('/student/<id>')
 def view_results(id):
-    cur = g.db.execute("SELECT Quizzes.q_id, Score.score, Quizzes.date, Quizzes.subject FROM Students JOIN Score ON Score.q_id = Quizzes.q_id WHERE Students.s_id=?",[id])
+    cur = g.db.execute(
+        "SELECT Quizzes.quiz_id, Score.score, Quizzes.date, Quizzes.subject "
+        "FROM Score inner join Quizzes ON Score.quiz_id = Quizzes.quiz_id "
+        "inner join Students on Score.student_id = Students.student_id "
+        "WHERE Students.student_id = ?", [id]
+    )
     res = cur.fetchall()
-    student_results = [dict(q_id=r[0],subject=r[1], date=r[2], score=r[3]) for r in res]
-    return render_template("score.html", student_results=student_results) 
+    student_results = [dict(q_id=r[0], subject=r[1], date=r[2], score=r[3]) for r in res]
+    return render_template("score.html", student_results=student_results)
+
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

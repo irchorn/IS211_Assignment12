@@ -1,21 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
 </head>
 <body>
-<table>
-    <h1>Students</h1>
+<table border="1">
+    <tr><td colspan="4"><h1>Students</h1></td></tr>
     <tr>
-        <th>ID</th><th>First Name</th><th>Last Name</th>
+        <th>ID</th><th>First Name</th><th>Last Name</th><th>Results</th>
     </tr>
     {% for s in students %}
     <tr>
-        <td>{{s.s_id}}</td><td>{{s.f_name}}</td><td>{{s.l_name}}</td><a href="'/student/{{s.s_id}}"></a>
+        <td>{{s.student_id}}</td>
+        <td>{{s.first_name}}</td>
+        <td>{{s.last_name}}</td>
+        <td><a href="'/student/{{s.student_id}}">Student_score</a></td>
     </tr>
     {% endfor %}
 </table>
+<br>
+<table border="1">
+    <tr><td colspan="4"><h1>Quizzes</h1></td> </tr>
+    <tr>
+        <th>ID</th><th>Subject</th><th>Number of Questions</th><th>Date</th>
+    </tr>
+    {% for s in quizzes %}
+    <tr>
+        <td>{{s.quiz_id}}</td>
+        <td>{{s.subject}}</td>
+        <td>{{s.number_of_questions}}</td>
+        <td>{{s.data}}</td>
+    </tr>
+    {% endfor %}
+</table>
+<a href="/add_student">Add a new Student</a>
+<a href="/add_quiz">Add a new Quiz</a>
 
 </body>
 </html>
